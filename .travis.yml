@@ -1,0 +1,13 @@
+dist: xenial
+os: linux
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database fin_API;' -U postgres
+language: node_js
+node_js:
+  - 14
+install:
+  - yarn install
+script:
+  - yarn test
