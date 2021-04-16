@@ -3,7 +3,7 @@ os: linux
 services:
   - postgresql
 before_script:
-  - psql -c 'create database fin_API;' -U postgres
+  - psql -c 'create database fin_api;' -U postgres
 language: node_js
 node_js:
   - 14
