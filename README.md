@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/magujun/ignite-nodejs-desafio-7.svg?branch=main)](https://travis-ci.com/magujun/ignite-nodejs-desafio-7)
+
 ## Rotas da aplicação
 
 Para te ajudar a entender melhor o funcionamento da aplicação como um todo, abaixo você verá uma descrição de cada rota e quais parâmetros recebe.
