@@ -9,12 +9,17 @@ Nesses desafios, serão criados testes unitários e de integração para uma 
 ## Testes
 UNIT | INT
 
- [✓] | [ ] Create User
+[✓] | [✓] Create User
 
- [✓] | [ ] Authenticate User
+[✓] | [✓] Authenticate User
 
- [✓] | [ ] Show User Profile 
+[✓] | [ ] Show User Profile 
 
+[ ] | [ ] Create Statement 
+
+[ ] | [ ] Show account balance 
+
+[ ] | [ ] Show Statement Operation 
 
 #
 <details>
