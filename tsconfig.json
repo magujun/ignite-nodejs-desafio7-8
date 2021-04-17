@@ -9,7 +9,7 @@
     "baseUrl": "./",
     "paths": {
       "@root/*": ["../*"],
-      "@src/*": ["./*"],
+      "@src/*": ["src/*"],
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
@@ -23,5 +23,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
-  }
+  },
+  "type": "module"
 }

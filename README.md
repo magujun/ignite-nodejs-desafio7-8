@@ -16,7 +16,7 @@ UNIT | INT
 
 [✓] | [✓] Show User Profile 
 
-[ ] | [ ] Create Statement 
+[✓] | [ ] Create Statement 
 
 [ ] | [ ] Show account balance 
 
