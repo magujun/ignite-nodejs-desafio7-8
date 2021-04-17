@@ -4,6 +4,7 @@
 
 ## [Desafio 7](https://www.notion.so/Desafio-01-Testes-unit-rios-0321db2af07e4b48a85a1e4e360fcd11) + [Desafio 8](https://www.notion.so/Desafio-02-Testes-de-integra-o-70a8af48044d444cb1d2c1fa00056958) 🚀
 
+## Sobre os desafios
 Nesses desafios, serão criados testes unitários e de integração para uma aplicação já pronta (FinAPI) usando tudo que aprendeu até agora sobre testes.
 
 ## Testes
