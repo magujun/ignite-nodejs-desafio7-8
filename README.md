@@ -13,7 +13,7 @@ UNIT | INT
 
 [✓] | [✓] Authenticate User
 
-[✓] | [ ] Show User Profile 
+[✓] | [✓] Show User Profile 
 
 [ ] | [ ] Create Statement 
 
