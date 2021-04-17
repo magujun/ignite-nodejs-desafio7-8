@@ -2,10 +2,11 @@
 
 ## Rotas da aplicação
 
-#### POST `/api/v1/users`
-<detail>
+<details>
+<summary>#### POST `/api/v1/users`</summary>
 A rota recebe `name`, `email` e `password` dentro do corpo da requisição, salva o usuário criado no banco e retorna uma resposta vazia com status `201`. 
-</detail>
+</details>
+
 #### POST `/api/v1/sessions`
 
 A rota recebe `email` e `password` no corpo da requisição e retorna os dados do usuário autenticado junto à um token JWT. 
