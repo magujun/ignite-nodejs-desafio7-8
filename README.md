@@ -18,7 +18,7 @@ UNIT | INT
 
 [✓] | [✓] Create Statement 
 
-[ ] | [ ] Show account balance 
+[✓] | [ ] Show account balance 
 
 [ ] | [ ] Show Statement Operation 
 
