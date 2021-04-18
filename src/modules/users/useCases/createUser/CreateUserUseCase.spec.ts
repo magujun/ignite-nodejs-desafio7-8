@@ -1,3 +1,4 @@
+import { AppError } from "@src/shared/errors/AppError";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ICreateUserDTO } from "../createUser/ICreateUserDTO";
@@ -18,5 +19,23 @@ describe("[Create a new user service]", () => {
     };
     const result = await createUserUseCase.execute(newUser);
     expect(result).toHaveProperty("id");
+  });
+  it("Should not be able to create a new user with an email that already exists", async () => {
+    expect(async () => {
+      const user: ICreateUserDTO = {
+        name: "User",
+        email: "user@example.com",
+        password: "userPassword",
+      };
+      await createUserUseCase.execute(user);
+      expect(async () => {
+        const duplicateUser: ICreateUserDTO = {
+          name: "User",
+          email: "user@example.com",
+          password: "userPassword",
+        };
+        await createUserUseCase.execute(duplicateUser);
+      }).rejects.toBeInstanceOf(AppError);
+    });
   });
 });

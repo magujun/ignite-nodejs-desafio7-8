@@ -1,3 +1,4 @@
+import { AppError } from "@src/shared/errors/AppError";
 import "reflect-metadata";
 import request from "supertest";
 import { container } from "tsyringe";
@@ -39,6 +40,28 @@ describe("Show User Profile", () => {
       .set({
         Authorization: `bearer ${userAuth.body.token}`,
       });
-      expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty("id");
+  });
+
+  it("Should not be able to show a profile with an invalid token", async () => {
+    const result = await request(app)
+      .get("/profile")
+      .send({
+        email: "user@example.com",
+        password: "userPassword",
+      })
+      .set({
+        Authorization: "token",
+      });
+    expect(result.status).toBe(401);
+  });
+
+  it("Should not be able to show a profile without a token", async () => {
+    const result = await request(app).get("/profile").send({
+      email: "user@example.com",
+      password: "userPassword",
+    });
+
+    expect(result.status).toBe(401);
   });
 });

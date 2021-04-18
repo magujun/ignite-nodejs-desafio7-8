@@ -1,3 +1,4 @@
+import { AppError } from "@src/shared/errors/AppError";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ICreateUserDTO } from "../createUser/ICreateUserDTO";
@@ -27,5 +28,17 @@ describe("[Authenticate user service]", () => {
       password: newUser.password,
     });
     expect(result).toHaveProperty("token");
+  });
+  it("Should not be able to authenticate an invalid user", async () => {
+    expect(async () => {
+      const invalidUser = {
+        email: "invalidUser@example.com",
+        password: "invalidUserPassword",
+      };
+      await authenticateUserUseCase.execute({
+        email: invalidUser.email,
+        password: invalidUser.password,
+      });
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -22,10 +22,10 @@ describe("[Create a new statement service]", () => {
       inMemoryStatementsRepository
     );
   });
-  it("Should be able to create a new statement", async () => {
+  it("Should be able to create a new deposit statement", async () => {
     const newUser: ICreateUserDTO = {
-      name: "User1",
-      email: "user1@example.com",
+      name: "User",
+      email: "user@example.com",
       password: "userPassword",
     };
     const user: any = await createUserUseCase.execute(newUser);
@@ -38,6 +38,21 @@ describe("[Create a new statement service]", () => {
     const result1 = await createStatementUseCase.execute(statement1);
     expect(result1).toHaveProperty("amount");
     expect(result1.amount).toBe(statement1.amount);
+  });
+  it("Should be able to create a new withdraw statement", async () => {
+    const newUser: ICreateUserDTO = {
+      name: "User",
+      email: "user@example.com",
+      password: "userPassword",
+    };
+    const user: any = await createUserUseCase.execute(newUser);
+    const statement1: ICreateStatementDTO = {
+      user_id: user.id,
+      type: OperationType.DEPOSIT,
+      amount: 100,
+      description: "Deposit 100",
+    };
+    await createStatementUseCase.execute(statement1);
     const statement2: ICreateStatementDTO = {
       user_id: user.id,
       type: OperationType.WITHDRAW,
@@ -47,6 +62,14 @@ describe("[Create a new statement service]", () => {
     const result2 = await createStatementUseCase.execute(statement2);
     expect(result2).toHaveProperty("amount");
     expect(result2.amount).toBe(statement2.amount);
+  });
+  it("Should not be able to create a new withdraw statement with insufficient funds", async () => {
+    const newUser: ICreateUserDTO = {
+      name: "User",
+      email: "user@example.com",
+      password: "userPassword",
+    };
+    const user: any = await createUserUseCase.execute(newUser);
     expect(async () => {
       const statement3: ICreateStatementDTO = {
         user_id: user.id,
@@ -56,14 +79,16 @@ describe("[Create a new statement service]", () => {
       };
       await createStatementUseCase.execute(statement3);
     }).rejects.toBeInstanceOf(AppError);
-    const statement4: ICreateStatementDTO = {
-      user_id: user.id,
-      type: OperationType.DEPOSIT,
-      amount: 50,
-      description: "Deposit 50",
-    };
-    const result4 = await createStatementUseCase.execute(statement4);
-    expect(result4).toHaveProperty("amount");
-    expect(result4.amount).toBe(statement4.amount);
+  });
+  it("Should not be able to create a new withdraw statement for an invalid user", async () => {
+    expect(async () => {
+      const statement4: ICreateStatementDTO = {
+        user_id: "invalidUser",
+        type: OperationType.WITHDRAW,
+        amount: 100,
+        description: "Withdraw 100",
+      };
+      await createStatementUseCase.execute(statement4);
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

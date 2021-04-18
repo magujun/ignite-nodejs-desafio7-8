@@ -1,3 +1,4 @@
+import { AppError } from "@src/shared/errors/AppError";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ICreateUserDTO } from "../createUser/ICreateUserDTO";
@@ -15,6 +16,7 @@ describe("[Show user profile service]", () => {
       inMemoryUsersRepository
     );
   });
+
   it("Should be able to show an user profile", async () => {
     const newUser: ICreateUserDTO = {
       name: "User3",
@@ -24,5 +26,14 @@ describe("[Show user profile service]", () => {
     const user: any = await createUserUseCase.execute(newUser);
     const result = await showUserProfileUseCase.execute(user.id);
     expect(result).toHaveProperty("id");
+  });
+
+  it("Should not be able to show a profile for an invalid user", async () => {
+    expect(async () => {
+      const invalidUser = {
+        id: "invalidUserId",
+      };
+      await showUserProfileUseCase.execute(invalidUser.id);
+    }).rejects.toBeInstanceOf(AppError);
   });
 });
