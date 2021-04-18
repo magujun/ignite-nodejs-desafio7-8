@@ -1,10 +1,9 @@
 import "reflect-metadata";
+import { CreateUserUseCase } from "@src/modules/users/useCases/createUser/CreateUserUseCase";
 import request from "supertest";
 import { container } from "tsyringe";
 import { Connection, createConnection } from "typeorm";
 import { app } from "../../../../app";
-import { CreateUserUseCase } from "@src/modules/users/useCases/createUser/CreateUserUseCase";
-import { IGetBalanceDTO } from "./IGetBalanceDTO";
 
 let connection: Connection;
 

@@ -6,16 +6,16 @@ import { OperationType } from "../../entities/Statement";
 import { InMemoryStatementsRepository } from "../../repositories/in-memory/InMemoryStatementsRepository";
 import { CreateStatementUseCase } from "../createStatement/CreateStatementUseCase";
 import { ICreateStatementDTO } from "../createStatement/ICreateStatementDTO";
-import { GetBalanceUseCase } from "./GetBalanceUseCase";
-import { IGetBalanceDTO } from "./IGetBalanceDTO";
+import { GetStatementOperationUseCase } from "./GetStatementOperationUseCase";
+import { IGetStatementOperationDTO } from "./IGetStatementOperationDTO";
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let createUserUseCase: CreateUserUseCase;
 let inMemoryStatementsRepository: InMemoryStatementsRepository;
 let createStatementUseCase: CreateStatementUseCase;
-let getBalanceUseCase: GetBalanceUseCase;
+let getStatementOperationUseCase: GetStatementOperationUseCase;
 
-describe("[Show user balance service]", () => {
+describe("[Get statement operation service]", () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
     createUserUseCase = new CreateUserUseCase(inMemoryUsersRepository);
@@ -24,58 +24,42 @@ describe("[Show user balance service]", () => {
       inMemoryUsersRepository,
       inMemoryStatementsRepository
     );
-    getBalanceUseCase = new GetBalanceUseCase(
-      inMemoryStatementsRepository,
-      inMemoryUsersRepository
+    getStatementOperationUseCase = new GetStatementOperationUseCase(
+      inMemoryUsersRepository,
+      inMemoryStatementsRepository
     );
   });
-  it("Should be able to show an user balance", async () => {
+  it("Should be able to show a statement operation", async () => {
     const newUser: ICreateUserDTO = {
       name: "User1",
       email: "user1@example.com",
       password: "userPassword",
     };
     const user: any = await createUserUseCase.execute(newUser);
-
-    const statement1: ICreateStatementDTO = {
+    const statement: ICreateStatementDTO = {
       user_id: user.id,
       type: OperationType.DEPOSIT,
       amount: 100,
       description: "Deposit 100",
     };
-    await createStatementUseCase.execute(statement1);
-    const statement2: ICreateStatementDTO = {
+    const getStatement: any = await createStatementUseCase.execute(statement);
+    const getStatementOperation: IGetStatementOperationDTO = {
       user_id: user.id,
-      type: OperationType.WITHDRAW,
-      amount: 50,
-      description: "Withdraw 50",
+      statement_id: getStatement.id,
     };
-    await createStatementUseCase.execute(statement2);
-    const getBalance1: IGetBalanceDTO = {
-      user_id: user.id,
-    };
-    const result = await getBalanceUseCase.execute(getBalance1);
-    expect(result.balance).toBe(50);
-
+    const result = await getStatementOperationUseCase.execute(
+      getStatementOperation
+    );
+    expect(result).toHaveProperty("id");
+    expect(result.amount).toBe(100);
+  });
+  it("Should not be able to show a statement operation for an invalid user or statement", async () => {
     expect(async () => {
-      const statement3: ICreateStatementDTO = {
-        user_id: user.id,
-        type: OperationType.WITHDRAW,
-        amount: 100,
-        description: "Withdraw 50",
+      const getStatementOperation: IGetStatementOperationDTO = {
+        user_id: "invalidUserId",
+        statement_id: "invalidStatementId",
       };
-      await createStatementUseCase.execute(statement3);
-      const getBalance2: IGetBalanceDTO = {
-        user_id: user.id,
-      };
-      await getBalanceUseCase.execute(getBalance2);
-    }).rejects.toBeInstanceOf(AppError);
-
-    expect(async () => {
-      const getBalance3: IGetBalanceDTO = {
-        user_id: "invalidUser",
-      };
-      await getBalanceUseCase.execute(getBalance3);
+      await getStatementOperationUseCase.execute(getStatementOperation);
     }).rejects.toBeInstanceOf(AppError);
   });
 });

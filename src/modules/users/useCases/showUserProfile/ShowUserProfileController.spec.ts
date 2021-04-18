@@ -1,10 +1,8 @@
-import { AppError } from "@src/shared/errors/AppError";
 import "reflect-metadata";
 import request from "supertest";
 import { container } from "tsyringe";
 import { Connection, createConnection } from "typeorm";
 import { app } from "../../../../app";
-import { AuthenticateUserUseCase } from "../authenticateUser/AuthenticateUserUseCase";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ICreateUserDTO } from "../createUser/ICreateUserDTO";
 
