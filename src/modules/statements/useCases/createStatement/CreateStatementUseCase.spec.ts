@@ -80,15 +80,15 @@ describe("[Create a new statement service]", () => {
       await createStatementUseCase.execute(statement3);
     }).rejects.toBeInstanceOf(AppError);
   });
-  it("Should not be able to create a new withdraw statement for an invalid user", async () => {
+  it("Should not be able to create a new statement for an invalid user", async () => {
     expect(async () => {
       const statement4: ICreateStatementDTO = {
         user_id: "invalidUser",
-        type: OperationType.WITHDRAW,
+        type: OperationType.DEPOSIT,
         amount: 100,
-        description: "Withdraw 100",
+        description: "Deposit 100",
       };
-      await createStatementUseCase.execute(statement4);
+      const result = await createStatementUseCase.execute(statement4);
     }).rejects.toBeInstanceOf(AppError);
   });
 });

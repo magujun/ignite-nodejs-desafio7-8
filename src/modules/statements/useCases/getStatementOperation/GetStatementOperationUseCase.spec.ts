@@ -15,7 +15,7 @@ let inMemoryStatementsRepository: InMemoryStatementsRepository;
 let createStatementUseCase: CreateStatementUseCase;
 let getStatementOperationUseCase: GetStatementOperationUseCase;
 
-describe("[Get statement operation service]", () => {
+describe("[Show statement operation service]", () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
     createUserUseCase = new CreateUserUseCase(inMemoryUsersRepository);

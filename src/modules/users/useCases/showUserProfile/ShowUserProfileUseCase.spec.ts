@@ -31,9 +31,9 @@ describe("[Show user profile service]", () => {
   it("Should not be able to show a profile for an invalid user", async () => {
     expect(async () => {
       const invalidUser = {
-        id: "invalidUserId",
+        user_id: "invalidUserId",
       };
-      await showUserProfileUseCase.execute(invalidUser.id);
-    }).rejects.toBeInstanceOf(AppError);
+      await showUserProfileUseCase.execute(invalidUser.user_id);
+    }).rejects.toHaveProperty('statusCode')
   });
 });

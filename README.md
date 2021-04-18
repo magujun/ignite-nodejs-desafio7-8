@@ -20,7 +20,7 @@ UNIT | INT
 
 [✓] | [✓] Show account balance 
 
-[✓] | [ ] Show Statement Operation 
+[✓] | [✓] Show statement operation 
 
 #
 <details>

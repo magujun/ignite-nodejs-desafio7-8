@@ -1,3 +1,4 @@
+import { AppError } from "@src/shared/errors/AppError";
 import "reflect-metadata";
 import request from "supertest";
 import { container } from "tsyringe";
